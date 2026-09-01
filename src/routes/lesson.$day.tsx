@@ -1,7 +1,20 @@
 import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AdBanner } from "@/components/AdBanner";
-import { DAYS, T, completeDay, getLang, getPlan, type Lang, type Plan } from "@/lib/kids-app";
+import {
+  CHARACTERS,
+  DAYS,
+  T,
+  completeDay,
+  getCharacter,
+  getCharacterVideo,
+  getLang,
+  getPlan,
+  setCharacter,
+  type CharacterId,
+  type Lang,
+  type Plan,
+} from "@/lib/kids-app";
 
 export const Route = createFileRoute("/lesson/$day")({
   head: () => ({
@@ -23,13 +36,18 @@ function LessonPage() {
   const navigate = useNavigate();
   const [lang, setLangState] = useState<Lang>("en");
   const [plan, setPlanState] = useState<Plan>("ads");
+  const [coach, setCoach] = useState<CharacterId | null>(null);
 
   useEffect(() => {
     setLangState(getLang());
     setPlanState(getPlan());
+    setCoach(getCharacter());
   }, []);
 
   const lesson = DAYS.find((d) => String(d.day) === day) ?? DAYS[0]!;
+  const activeCoach = coach ? CHARACTERS.find((c) => c.id === coach)! : null;
+  const videoSrc = coach ? getCharacterVideo(coach, lesson.day) : lesson.video;
+
 
   return (
     <div className="font-body text-ink">
