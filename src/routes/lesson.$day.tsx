@@ -73,16 +73,48 @@ function LessonPage() {
           </div>
         </header>
 
+        <div className="glass relative z-10 mx-4 mt-4 rounded-[26px] p-4">
+          <p className="text-[11px] font-bold uppercase tracking-[.14em] text-sky-deep">
+            {T.chooseCoach[lang]}
+          </p>
+          <div className="mt-3 grid grid-cols-3 gap-2">
+            {CHARACTERS.map((c) => {
+              const active = coach === c.id;
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => {
+                    setCoach(c.id);
+                    setCharacter(c.id);
+                  }}
+                  className={`spring flex flex-col items-center gap-1 rounded-2xl bg-white/70 px-2 py-3 ${
+                    active ? "ring-4 ring-mint/60" : ""
+                  }`}
+                >
+                  <span className="text-2xl leading-none">{c.emoji}</span>
+                  <span className="text-[11px] font-extrabold text-ink/75">{c.name[lang]}</span>
+                </button>
+              );
+            })}
+          </div>
+          <p className="mt-2 text-xs font-semibold text-ink/60">
+            {activeCoach
+              ? `${activeCoach.emoji} ${activeCoach.name[lang]} ${T.teaches[lang]} ${lesson.title[lang]}`
+              : T.coachTip[lang]}
+          </p>
+        </div>
+
         <div className="relative z-10 mx-4 mt-4 overflow-hidden rounded-[28px] animate-[pop_.45s_var(--ease-spring)_both]">
           <video
-            key={lesson.day}
+            key={`${lesson.day}-${coach ?? "default"}`}
             controls
             playsInline
             poster={lesson.image}
-            src={lesson.video}
+            src={videoSrc}
             className="aspect-video w-full bg-sky object-cover"
           />
         </div>
+
 
         <p className="relative z-10 mx-5 mt-4 font-display text-lg font-extrabold leading-snug">
           {lesson.intro[lang]}
