@@ -29,7 +29,7 @@ function LessonPage() {
     setPlanState(getPlan());
   }, []);
 
-  const lesson = DAYS.find((d) => String(d.day) === day) ?? DAYS[0];
+  const lesson = DAYS.find((d) => String(d.day) === day) ?? DAYS[0]!;
 
   return (
     <div className="font-body text-ink">

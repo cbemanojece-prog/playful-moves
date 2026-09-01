@@ -23,10 +23,10 @@ const nodeY = (i: number) => 40 + i * 88;
 
 function trailPath() {
   const pts = DAYS.map((_, i) => ({ x: nodeX(i), y: nodeY(i) }));
-  let d = `M${pts[0].x},${pts[0].y}`;
+  let d = `M${pts[0]!.x},${pts[0]!.y}`;
   for (let i = 1; i < pts.length; i++) {
-    const p0 = pts[i - 1];
-    const p1 = pts[i];
+    const p0 = pts[i - 1]!;
+    const p1 = pts[i]!;
     const midY = (p0.y + p1.y) / 2;
     d += ` C${p0.x},${midY} ${p1.x},${midY} ${p1.x},${p1.y}`;
   }
@@ -46,7 +46,7 @@ function PathPage() {
   }, []);
 
   const currentIndex = Math.min(completed.length, DAYS.length - 1);
-  const current = DAYS[currentIndex];
+  const current = DAYS[currentIndex]!;
   const progress = Math.round((completed.length / DAYS.length) * 100);
 
   return (
