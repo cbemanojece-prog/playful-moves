@@ -130,8 +130,14 @@ function LessonPage() {
                 <span className="grid size-7 shrink-0 place-items-center rounded-full bg-sun font-display text-sm font-extrabold shadow-[0_3px_0_var(--color-sun-deep)]">
                   {i + 1}
                 </span>
+                {activeCoach && (
+                  <span className="shrink-0 text-lg leading-6" aria-hidden="true">
+                    {activeCoach.emoji}
+                  </span>
+                )}
                 <span className="text-sm font-bold text-ink/75">{s}</span>
               </li>
+
             ))}
           </ol>
         </div>
