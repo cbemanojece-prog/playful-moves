@@ -136,11 +136,62 @@ export const T = {
   path: { en: "Path", de: "Pfad" },
   moves: { en: "Moves", de: "Übungen" },
   adBanner: { en: "Ad · Your ad could be here", de: "Werbung · Hier könnte Werbung stehen" },
+  chooseCoach: { en: "Who should teach you?", de: "Wer soll dir zeigen wie?" },
+  coachTip: { en: "Tap a buddy to see their video.", de: "Tippe auf einen Freund für sein Video." },
+  teaches: { en: "teaches", de: "zeigt" },
 } satisfies Record<string, Record<Lang, string>>;
+
+export type CharacterId = "monkey" | "tiger" | "spiderman";
+
+export type Character = {
+  id: CharacterId;
+  emoji: string;
+  name: Record<Lang, string>;
+  videos: string[];
+};
+
+const V = (n: string) => `https://storage.googleapis.com/gtv-videos-bucket/sample/${n}.mp4`;
+
+export const CHARACTERS: Character[] = [
+  {
+    id: "monkey",
+    emoji: "🐒",
+    name: { en: "Monkey", de: "Affe" },
+    videos: [V("ForBiggerFun"), V("ForBiggerJoyrides"), V("ForBiggerEscapes")],
+  },
+  {
+    id: "tiger",
+    emoji: "🐯",
+    name: { en: "Tiger", de: "Tiger" },
+    videos: [V("ForBiggerBlazes"), V("ForBiggerMeltdowns"), V("ElephantsDream")],
+  },
+  {
+    id: "spiderman",
+    emoji: "🕷️",
+    name: { en: "Spiderman", de: "Spiderman" },
+    videos: [V("SubaruOutbackOnStreetAndDirt"), V("VolkswagenGTIReview"), V("WeAreGoingOnBullrun")],
+  },
+];
+
+export function getCharacterVideo(characterId: CharacterId, day: number): string {
+  const c = CHARACTERS.find((x) => x.id === characterId) ?? CHARACTERS[0]!;
+  return c.videos[(day - 1) % c.videos.length]!;
+}
 
 const LANG_KEY = "cloudhop.lang";
 const PLAN_KEY = "cloudhop.plan";
 const PROGRESS_KEY = "cloudhop.progress";
+const CHAR_KEY = "cloudhop.character";
+
+export function getCharacter(): CharacterId | null {
+  if (typeof window === "undefined") return null;
+  const v = localStorage.getItem(CHAR_KEY) as CharacterId | null;
+  return v && CHARACTERS.some((c) => c.id === v) ? v : null;
+}
+export function setCharacter(c: CharacterId) {
+  localStorage.setItem(CHAR_KEY, c);
+}
+
 
 export function getLang(): Lang {
   if (typeof window === "undefined") return "en";
