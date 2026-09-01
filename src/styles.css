@@ -142,3 +142,40 @@
     color: var(--color-foreground);
   }
 }
+
+/* ── Cloudhop kids design system ────────────────────────────── */
+@theme {
+  --font-display: "Baloo 2", system-ui, sans-serif;
+  --font-body: "Nunito", system-ui, sans-serif;
+  --color-sky: #cfe9ff;
+  --color-sky-deep: #93c4f5;
+  --color-mint: #4fd18b;
+  --color-mint-deep: #1f9e5f;
+  --color-sun: #ffcf3f;
+  --color-sun-deep: #e0a415;
+  --color-coral: #ff7a8a;
+  --color-ink: #1d3557;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes halo { 0%,100%{transform:scale(1);opacity:.5} 50%{transform:scale(1.28);opacity:.12} }
+@keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+@keyframes rise { from{transform:translateY(26px);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes pop { from{transform:scale(.94);opacity:0} to{transform:scale(1);opacity:1} }
+
+@utility glass {
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px) saturate(1.4);
+}
+
+@utility spring {
+  transition: transform 0.14s var(--ease-spring);
+  &:active {
+    transform: translateY(3px) scale(0.97);
+  }
+}
+
+@utility cloud-bg {
+  background: linear-gradient(180deg, #dcefff 0%, #bfe0ff 45%, #eaf6ff 100%);
+}
